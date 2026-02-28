@@ -4,13 +4,9 @@ const pkg = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 
-module.exports = function (api) {
-  api.cache(true);
-
-  return getConfig(
-    {
-      presets: ['babel-preset-expo'],
-    },
-    { root, pkg }
-  );
-};
+module.exports = getConfig(
+  {
+    presets: ['module:@react-native/babel-preset'],
+  },
+  { root, pkg }
+);
