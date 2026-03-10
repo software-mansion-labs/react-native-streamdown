@@ -7,11 +7,17 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "build:android": "react-native build-android --extra-params \"--no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a\"",
-    "build:ios": "react-native build-ios --mode Debug"
+    "build:ios": "react-native build-ios --mode Debug",
+    "postinstall": "mkdir -p node_modules/react-native-worklets/.worklets && mkdir -p ../node_modules/react-native-worklets/.worklets"
   },
   "dependencies": {
     "react": "19.2.0",
-    "react-native": "0.83.0"
+    "react-native": "0.83.0",
+    "react-native-enriched-markdown": "0.4.0",
+    "react-native-safe-area-context": "^5.7.0",
+    "react-native-streamdown": "*",
+    "react-native-worklets": "0.8.0-bundle-mode-preview-1",
+    "remend": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -29,5 +35,10 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "worklets": {
+    "staticFeatureFlags": {
+      "BUNDLE_MODE_ENABLED": true
+    }
   }
 }
