@@ -2,7 +2,7 @@
 
 A streaming-ready markdown component for React Native built on top of [`react-native-enriched-markdown`](https://github.com/Expensify/react-native-enriched-markdown) and [`remend`](https://www.npmjs.com/package/remend).
 
-It processes raw, incomplete markdown (as it streams token-by-token from an LLM) on a background worklet thread using [`react-native-worklets`](https://github.com/margelo/react-native-worklets) Bundle Mode, keeping the JS thread free at all times.
+It processes raw, incomplete markdown (as it streams token-by-token from an LLM) in the background using [`react-native-worklets`](https://github.com/margelo/react-native-worklets) powerful concurrency feature - the Bundle Mode - keeping the JS thread free at all times.
 
 ## Features
 
@@ -10,7 +10,7 @@ It processes raw, incomplete markdown (as it streams token-by-token from an LLM)
 - Background thread processing via `react-native-worklets` Bundle Mode
 - Inline LaTeX support (`$...$`) with streaming completion — applied automatically, no configuration needed (we've also opened a [PR to add this directly to remend](https://github.com/vercel/streamdown/pull/446))
 - CommonMark rendering (headers, bold, italic, inline code, fenced code blocks, links, images) powered by `react-native-enriched-markdown` with built-in `streamingAnimation`
-- Customisable via `remendConfig`
+- Customizable via `remendConfig`
 
 ---
 
@@ -26,85 +26,41 @@ yarn add react-native-streamdown
 yarn add react-native-enriched-markdown react-native-worklets remend
 ```
 
-| Package | Version |
-|---|---|
-| `react-native-enriched-markdown` | `^0.4.0-nightly-*` |
-| `react-native-worklets` | `0.8.0-bundle-mode-preview-1` |
-| `remend` | `^1.2.2` |
+| Package                          | Version                       |
+| -------------------------------- | ----------------------------- |
+| `react-native-enriched-markdown` | `^0.4.0-nightly-*`            |
+| `react-native-worklets`          | `0.8.0-bundle-mode-preview-2` |
+| `remend`                         | `^1.2.2`                      |
 
 ---
 
 ## Required setup — Bundle Mode
 
-`react-native-streamdown` runs markdown processing on a worklet thread using **Bundle Mode** from `react-native-worklets`. This requires three configuration files in your app. For full details see the [official Bundle Mode setup guide](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/setup/) and the [Bundle Mode Showcase App](https://github.com/software-mansion-labs/Bundle-Mode-showcase-app) for a real-world reference.
+`react-native-streamdown` runs markdown processing on a worklet thread using **Bundle Mode** from `react-native-worklets`. This requires extra configuration steps from the [official Bundle Mode setup guide](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/setup/). Make sure to complete these steps before continuing. For a real-world reference of an app configured with Bundle Mode, check out the [Bundle Mode Showcase App](https://github.com/software-mansion-labs/Bundle-Mode-showcase-app).
 
-### 1. `package.json` — enable Bundle Mode flag
+### 1. `babel.config.js` — configure Worklets Babel plugin
 
-```json
-{
-  "worklets": {
-    "staticFeatureFlags": {
-      "BUNDLE_MODE_ENABLED": true
-    }
-  }
-}
-```
-
-Also add a `postinstall` script to create the `.worklets/` output directory that the Babel plugin writes bundles into:
-
-```json
-{
-  "scripts": {
-    "postinstall": "mkdir -p node_modules/react-native-worklets/.worklets"
-  }
-}
-```
-
-### 2. `package.json` — add recommended Metro patches
-
-These two patches fix known Bundle Mode issues and are strongly recommended. Add them to your app's root `package.json`:
-
-```json
-{
-  "resolutions": {
-    "metro": "patch:metro@npm%3A0.83.2#~/.yarn/patches/metro-npm-0.83.2-d09f48ca84.patch",
-    "metro-runtime": "patch:metro-runtime@npm%3A0.83.2#~/.yarn/patches/metro-runtime-npm-0.83.2-c614bbd3b9.patch"
-  }
-}
-```
-
-- **`metro` patch** — fixes `"Failed to get the SHA-1"` errors for `.worklets/` files that Metro can't index fast enough during Bundle Mode bundling.
-- **`metro-runtime` patch** — propagates Fast Refresh updates to Worklet Runtimes, so worklet code changes hot-reload correctly without a full app restart.
-
-You can copy the patch files from the `.yarn/patches/` directory of this repository.
-
-### 3. `babel.config.js` — add the worklets plugin with Bundle Mode
+`react-native-streamdown` requires special options to be added to the Worklets Babel plugin config in `babel.config.js`:
 
 ```js
-module.exports = {
-  presets: ['module:@react-native/babel-preset'],
-  plugins: [
-    [
-      'react-native-worklets/plugin',
-      {
-        bundleMode: true,
-        strictGlobal: true,
-        workletizableModules: ['remend'],
-      },
-    ],
-  ],
+const workletsPluginOptions = {
+  bundleMode: true,
+  // other options...
+  workletizableModules: ['remend'], // add this line
 };
 ```
 
 `workletizableModules: ['remend']` tells the Babel plugin to pre-bundle `remend` for the worklet runtime so it can be called off the JS thread.
 
-### 4. `metro.config.js` — add the Bundle Mode serialiser and resolver
+### 2. `metro.config.js` — configure Metro for monorepos
+
+`react-native-worklets` Bundle Mode generates files on the fly that might not be tracked by Metro in some monorepo setups. It might also shadow your resolving function. If you're running into issues with module resolution, you need to add the following to your `metro.config.js`:
 
 ```js
-const { getDefaultConfig } = require('@react-native/metro-config');
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const { bundleModeMetroConfig } = require('react-native-worklets/bundleMode');
 
-const config = getDefaultConfig(__dirname);
+let config = getDefaultConfig(__dirname);
 
 // Watch the .worklets/ output directory
 config.watchFolders.push(
@@ -116,6 +72,9 @@ config.watchFolders.push(
 
 // Resolve react-native-worklets/.worklets/* via the Bundle Mode resolver
 const defaultResolver = config.resolver.resolveRequest;
+
+config = mergeConfig(config, bundleModeMetroConfig);
+
 config.resolver.resolveRequest = (context, moduleName, platform) => {
   if (moduleName.startsWith('react-native-worklets/.worklets/')) {
     return bundleModeMetroConfig.resolver.resolveRequest(
@@ -127,12 +86,8 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   return defaultResolver(context, moduleName, platform);
 };
 
-// Merge the Bundle Mode serialiser
-config.serializer = { ...config.serializer, ...bundleModeMetroConfig.serializer };
-
 module.exports = config;
 ```
-
 
 ---
 
@@ -142,15 +97,15 @@ module.exports = config;
 import { StreamdownText } from 'react-native-streamdown';
 
 // rawMarkdown can be updated token-by-token as the LLM streams
-<StreamdownText rawMarkdown={partialMarkdown} />
+<StreamdownText rawMarkdown={partialMarkdown} />;
 ```
 
 ### Props
 
 `StreamdownText` accepts all props from `EnrichedMarkdownText` (except `flavor`, which is hardcoded to `commonmark`) plus one additional prop:
 
-| Prop | Type | Description |
-|---|---|---|
+| Prop           | Type            | Description                                                                                                                                 |
+| -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `remendConfig` | `RemendOptions` | Optional. Override the default remend processing config. See [remend docs](https://www.npmjs.com/package/remend) for all available options. |
 
 ---

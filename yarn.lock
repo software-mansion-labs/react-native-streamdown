@@ -10707,7 +10707,7 @@ __metadata:
     react-native-monorepo-config: "npm:^0.3.3"
     react-native-safe-area-context: "npm:^5.7.0"
     react-native-streamdown: "npm:*"
-    react-native-worklets: "npm:0.8.0-bundle-mode-preview-1"
+    react-native-worklets: "npm:0.8.0-bundle-mode-preview-2"
     remend: "npm:^1.2.2"
   languageName: unknown
   linkType: soft
@@ -10738,7 +10738,7 @@ __metadata:
     react-native-builder-bob: "npm:^0.40.18"
     react-native-enriched-markdown: "npm:0.4.0"
     react-native-sse: "npm:1.2.1"
-    react-native-worklets: "npm:0.8.0-bundle-mode-preview-1"
+    react-native-worklets: "npm:0.8.0-bundle-mode-preview-2"
     release-it: "npm:^19.0.4"
     remend: "npm:1.2.2"
     turbo: "npm:^2.5.6"
@@ -10747,14 +10747,14 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-enriched-markdown: 0.4.0
-    react-native-worklets: 0.8.0-bundle-mode-preview-1
+    react-native-worklets: 0.8.0-bundle-mode-preview-2
     remend: 1.2.2
   languageName: unknown
   linkType: soft
 
-"react-native-worklets@npm:0.8.0-bundle-mode-preview-1":
-  version: 0.8.0-bundle-mode-preview-1
-  resolution: "react-native-worklets@npm:0.8.0-bundle-mode-preview-1"
+"react-native-worklets@npm:0.8.0-bundle-mode-preview-2":
+  version: 0.8.0-bundle-mode-preview-2
+  resolution: "react-native-worklets@npm:0.8.0-bundle-mode-preview-2"
   dependencies:
     "@babel/plugin-transform-arrow-functions": "npm:7.27.1"
     "@babel/plugin-transform-class-properties": "npm:7.27.1"
@@ -10770,9 +10770,10 @@ __metadata:
     semver: "npm:7.7.3"
   peerDependencies:
     "@babel/core": "*"
+    "@react-native/metro-config": "*"
     react: "*"
     react-native: "*"
-  checksum: 10c0/c41d20b08fab38652b1d400d5b080dee3f4df123db227913200e0c427f8276749b69bb5d24941e71e4b0a7454a6b56064e0d454d44c1652b0392b99b31bef64a
+  checksum: 10c0/9f04abb94bb88687aa225381d6239eddad80f0ce95279e87956b159b3be35c05dbba7114b1f790f5028bf054dda2bcad5484fe460e664bd50690fae6880f69db
   languageName: node
   linkType: hard
 
