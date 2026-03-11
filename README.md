@@ -96,8 +96,8 @@ module.exports = config;
 ```tsx
 import { StreamdownText } from 'react-native-streamdown';
 
-// rawMarkdown can be updated token-by-token as the LLM streams
-<StreamdownText rawMarkdown={partialMarkdown} />;
+// markdown can be updated token-by-token as the LLM streams
+<StreamdownText markdown={partialMarkdown} />;
 ```
 
 ### Props
