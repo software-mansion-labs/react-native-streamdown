@@ -1,3 +1,4 @@
-export function multiply(a: number, b: number): number {
-  return a * b;
-}
+export { StreamdownText } from './StreamdownText';
+
+export type { StreamdownTextProps } from './types';
+export type { RemendOptions } from 'remend';

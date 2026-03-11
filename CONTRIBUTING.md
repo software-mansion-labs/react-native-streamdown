@@ -53,12 +53,6 @@ Running "StreamdownExample" with {"fabric":true,"initialProps":{"concurrentRoot"
 
 Note the `"fabric":true` and `"concurrentRoot":true` properties.
 
-To run the example app on Web:
-
-```sh
-yarn example web
-```
-
 Make sure your code passes TypeScript:
 
 ```sh

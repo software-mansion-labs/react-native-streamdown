@@ -79,18 +79,29 @@
     "react": "19.2.0",
     "react-native": "0.83.2",
     "react-native-builder-bob": "^0.40.18",
+    "react-native-enriched-markdown": "0.4.0",
+    "react-native-sse": "1.2.1",
+    "react-native-worklets": "0.8.0-bundle-mode-preview-2",
     "release-it": "^19.0.4",
+    "remend": "1.2.2",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-enriched-markdown": "0.4.0",
+    "react-native-worklets": "0.8.0-bundle-mode-preview-2",
+    "remend": "1.2.2"
   },
   "workspaces": [
     "example"
   ],
   "packageManager": "yarn@4.11.0",
+  "resolutions": {
+    "metro": "patch:metro@npm%3A0.83.2#~/.yarn/patches/metro-npm-0.83.2-d09f48ca84.patch",
+    "metro-runtime": "patch:metro-runtime@npm%3A0.83.2#~/.yarn/patches/metro-runtime-npm-0.83.2-c614bbd3b9.patch"
+  },
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
