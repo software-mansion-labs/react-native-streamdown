@@ -28,9 +28,9 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 
 | Package                          | Version                       |
 | -------------------------------- | ----------------------------- |
-| `react-native-enriched-markdown` | `^0.4.0-nightly-*`            |
+| `react-native-enriched-markdown` | `0.4.0`                       |
 | `react-native-worklets`          | `0.8.0-bundle-mode-preview-2` |
-| `remend`                         | `^1.2.2`                      |
+| `remend`                         | `1.2.2`                       |
 
 ---
 

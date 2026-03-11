@@ -2566,7 +2566,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNWorklets (0.8.0-bundle-mode-preview-1):
+  - RNWorklets (0.8.0-bundle-mode-preview-2):
     - boost
     - DoubleConversion
     - fast_float
@@ -2593,10 +2593,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets (= 0.8.0-bundle-mode-preview-1)
+    - RNWorklets/worklets (= 0.8.0-bundle-mode-preview-2)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets (0.8.0-bundle-mode-preview-1):
+  - RNWorklets/worklets (0.8.0-bundle-mode-preview-2):
     - boost
     - DoubleConversion
     - fast_float
@@ -2623,10 +2623,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets/apple (= 0.8.0-bundle-mode-preview-1)
+    - RNWorklets/worklets/apple (= 0.8.0-bundle-mode-preview-2)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets/apple (0.8.0-bundle-mode-preview-1):
+  - RNWorklets/worklets/apple (0.8.0-bundle-mode-preview-2):
     - boost
     - DoubleConversion
     - fast_float
@@ -2990,10 +2990,10 @@ SPEC CHECKSUMS:
   ReactCodegen: 11c08ff43a62009d48c71de000352e4515918801
   ReactCommon: 424cc34cf5055d69a3dcf02f3436481afb8b0f6f
   ReactNativeEnrichedMarkdown: 05c15b1ff42c2f2120fee759a36373a6229b0dc2
-  RNWorklets: 9edb9ad646ce8fe141cbc33dedb34aa61eac4726
+  RNWorklets: 1bd6dbd560d147937758d56a91ad083be2f35cf0
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 6ca93c8c13f56baeec55eb608577619b17a4d64e
 
 PODFILE CHECKSUM: 9e4e62c5cde7380decd7f99194592e6482943d20
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
