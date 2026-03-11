@@ -2,7 +2,7 @@
 
 A streaming-ready markdown component for React Native built on top of [`react-native-enriched-markdown`](https://github.com/Expensify/react-native-enriched-markdown) and [`remend`](https://www.npmjs.com/package/remend).
 
-It processes raw, incomplete markdown (as it streams token-by-token from an LLM) in the background using [`react-native-worklets`](https://github.com/margelo/react-native-worklets) powerful concurrency feature - the Bundle Mode - keeping the JS thread free at all times.
+It processes raw, incomplete markdown (as it streams token-by-token from an LLM) in the background using [`react-native-worklets`](https://docs.swmansion.com/react-native-worklets/docs/) powerful concurrency feature - the Bundle Mode - keeping the JS thread free at all times.
 
 ## Features
 
