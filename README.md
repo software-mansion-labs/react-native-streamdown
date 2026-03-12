@@ -1,6 +1,8 @@
 # react-native-streamdown
 
-A streaming-ready markdown component for React Native built on top of [`react-native-enriched-markdown`](https://github.com/Expensify/react-native-enriched-markdown) and [`remend`](https://www.npmjs.com/package/remend).
+> This project is not affiliated with, endorsed by, or sponsored by Vercel.
+
+A streaming-ready markdown component for React Native built on top of [`react-native-enriched-markdown`](https://github.com/software-mansion-labs/react-native-enriched-markdown) and [`remend`](https://www.npmjs.com/package/remend).
 
 It processes raw, incomplete markdown (as it streams token-by-token from an LLM) in the background using [`react-native-worklets`](https://docs.swmansion.com/react-native-worklets/docs/) powerful concurrency feature - the Bundle Mode - keeping the JS thread free at all times.
 
