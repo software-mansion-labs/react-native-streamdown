@@ -47,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hryhoriiK97/react-native-streamdown.git"
+    "url": "git+https://github.com/software-mansion-labs/react-native-streamdown.git"
   },
   "author": "Gregory Moskaliuk <mosckalyuck@gmail.com> (https://github.com/hryhoriiK97)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hryhoriiK97/react-native-streamdown/issues"
+    "url": "https://github.com/software-mansion-labs/react-native-streamdown/issues"
   },
-  "homepage": "https://github.com/hryhoriiK97/react-native-streamdown#readme",
+  "homepage": "https://github.com/software-mansion-labs/react-native-streamdown#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
