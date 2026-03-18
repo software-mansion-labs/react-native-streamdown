@@ -81,7 +81,7 @@
     "react-native-builder-bob": "^0.40.18",
     "react-native-enriched-markdown": "0.4.0",
     "react-native-sse": "1.2.1",
-    "react-native-worklets": "0.8.0-bundle-mode-preview-2",
+    "react-native-worklets": "0.8.0-rc.0",
     "release-it": "^19.0.4",
     "remend": "1.2.2",
     "turbo": "^2.5.6",
@@ -91,7 +91,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-enriched-markdown": "0.4.0",
-    "react-native-worklets": "0.8.0-bundle-mode-preview-2",
+    "react-native-worklets": "0.8.0-rc.0",
     "remend": "1.2.2"
   },
   "workspaces": [
