@@ -28,11 +28,11 @@ yarn add react-native-streamdown
 yarn add react-native-enriched-markdown react-native-worklets remend
 ```
 
-| Package                          | Version                       |
-| -------------------------------- | ----------------------------- |
-| `react-native-enriched-markdown` | `0.4.0`                       |
-| `react-native-worklets`          | `0.8.0-bundle-mode-preview-2` |
-| `remend`                         | `1.2.2`                       |
+| Package                          | Version      |
+| -------------------------------- | ------------ |
+| `react-native-enriched-markdown` | `0.4.0`      |
+| `react-native-worklets`          | `0.8.0-rc.0` |
+| `remend`                         | `1.2.2`      |
 
 ---
 
@@ -42,7 +42,31 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 
 ### 1. `babel.config.js` — configure Worklets Babel plugin
 
-`react-native-streamdown` requires special options to be added to the Worklets Babel plugin config in `babel.config.js`:
+`react-native-streamdown` requires special options to be added to the Worklets Babel plugin config in `babel.config.js`, namely `bundleMode: true` and `workletizableModules: ['remend']`. Your final config could look like this:
+
+#### Expo
+
+```js
+module.exports = function (api) {
+  api.cache(true);
+
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: [
+      [
+        'react-native-worklets/plugin',
+        {
+          bundleMode: true,
+          // other options...
+          workletizableModules: ['remend'], // add this line
+        },
+      ],
+    ],
+  };
+};
+```
+
+#### React Native CLI
 
 ```js
 const workletsPluginOptions = {
@@ -57,6 +81,45 @@ const workletsPluginOptions = {
 ### 2. `metro.config.js` — configure Metro for monorepos
 
 `react-native-worklets` Bundle Mode generates files on the fly that might not be tracked by Metro in some monorepo setups. It might also shadow your resolving function. If you're running into issues with module resolution, you need to add the following to your `metro.config.js`:
+
+#### Expo
+
+```js
+const { getDefaultConfig } = require('expo/metro-config');
+const {
+  getBundleModeMetroConfig,
+} = require('react-native-worklets/bundleMode');
+
+let config = getDefaultConfig(__dirname);
+
+// Watch the .worklets/ output directory
+config.watchFolders.push(
+  require('path').resolve(
+    __dirname,
+    'node_modules/react-native-worklets/.worklets'
+  )
+);
+
+// Resolve react-native-worklets/.worklets/* via the Bundle Mode resolver
+const defaultResolver = config.resolver.resolveRequest;
+
+config = getBundleModeMetroConfig(config);
+
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (moduleName.startsWith('react-native-worklets/.worklets/')) {
+    return bundleModeMetroConfig.resolver.resolveRequest(
+      context,
+      moduleName,
+      platform
+    );
+  }
+  return defaultResolver(context, moduleName, platform);
+};
+
+module.exports = config;
+```
+
+#### React Native CLI
 
 ```js
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
