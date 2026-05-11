@@ -10,7 +10,7 @@ It processes raw, incomplete markdown (as it streams token-by-token from an LLM)
 
 - Renders incomplete streaming markdown correctly — no visual glitches mid-stream
 - Background thread processing via `react-native-worklets` Bundle Mode
-- Inline LaTeX support (`$...$`) with streaming completion — applied automatically, no configuration needed (we've also opened a [PR to add this directly to remend](https://github.com/vercel/streamdown/pull/446))
+- Inline LaTeX support (`$...$`) with streaming completion — applied automatically, no configuration needed
 - CommonMark rendering (headers, bold, italic, inline code, fenced code blocks, links, images) powered by `react-native-enriched-markdown` with built-in `streamingAnimation`
 - Customizable via `remendConfig`
 
@@ -28,17 +28,17 @@ yarn add react-native-streamdown
 yarn add react-native-enriched-markdown react-native-worklets remend
 ```
 
-| Package                          | Version      |
-| -------------------------------- | ------------ |
-| `react-native-enriched-markdown` | `0.4.0`      |
-| `react-native-worklets`          | `0.8.3`      |
-| `remend`                         | `1.2.2`      |
+| Package                          | Version |
+| -------------------------------- | ------- |
+| `react-native-enriched-markdown` | `0.4.0` |
+| `react-native-worklets`          | `0.8.3` |
+| `remend`                         | `1.3.0` |
 
 ---
 
 ## Required setup — Bundle Mode
 
-`react-native-streamdown` runs markdown processing on a worklet thread using __Bundle Mode__ from `react-native-worklets`. This requires extra configuration steps from the [official Bundle Mode setup guide](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/setup/). Make sure to complete these steps before continuing. For a real-world reference of an app configured with Bundle Mode, check out the [Bundle Mode Showcase App](https://github.com/software-mansion-labs/Bundle-Mode-showcase-app).
+`react-native-streamdown` runs markdown processing on a worklet thread using **Bundle Mode** from `react-native-worklets`. This requires extra configuration steps from the [official Bundle Mode setup guide](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/setup/). Make sure to complete these steps before continuing. For a real-world reference of an app configured with Bundle Mode, check out the [Bundle Mode Showcase App](https://github.com/software-mansion-labs/Bundle-Mode-showcase-app).
 
 ### 1. `babel.config.js` — configure Worklets Babel plugin
 
@@ -179,8 +179,8 @@ import { StreamdownText } from 'react-native-streamdown';
 
 The `example/` directory in this repository contains a fully working demo app that shows:
 
-- __Streaming Markdown Simulator__ — streams a sample markdown document token-by-token to demonstrate rendering quality and the `streamingAnimation` effect
-- __LLM Streaming Demo__ — connects to the OpenAI Chat Completions API via SSE and renders the response live using `StreamdownText`
+- **Streaming Markdown Simulator** — streams a sample markdown document token-by-token to demonstrate rendering quality and the `streamingAnimation` effect
+- **LLM Streaming Demo** — connects to the OpenAI Chat Completions API via SSE and renders the response live using `StreamdownText`
 
 It is a practical reference for the full Bundle Mode setup (Babel, Metro, `package.json` flags) and for how to wire `StreamdownText` into a real streaming UI.
 
@@ -188,7 +188,7 @@ It is a practical reference for the full Bundle Mode setup (Babel, Metro, `packa
 
 ## Limitations
 
-- __CommonMark only__ — `StreamdownText` currently renders using the `commonmark` flavour of `react-native-enriched-markdown`. GitHub Flavored Markdown (GFM) support is planned for a future release.
+- **CommonMark only** — `StreamdownText` currently renders using the `commonmark` flavour of `react-native-enriched-markdown`. GitHub Flavored Markdown (GFM) support is planned for a future release.
 
 ---
 
