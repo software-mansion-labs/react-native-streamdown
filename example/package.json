@@ -10,12 +10,12 @@
     "build:ios": "react-native build-ios --mode Debug"
   },
   "dependencies": {
-    "react": "19.2.0",
-    "react-native": "0.83.0",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
     "react-native-enriched-markdown": "0.4.0",
     "react-native-safe-area-context": "^5.7.0",
     "react-native-streamdown": "*",
-    "react-native-worklets": "0.8.0-rc.0",
+    "react-native-worklets": "0.8.3",
     "remend": "1.2.2"
   },
   "devDependencies": {
@@ -25,19 +25,14 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
-    "@react-native/babel-preset": "0.83.0",
-    "@react-native/metro-config": "0.83.0",
-    "@react-native/typescript-config": "0.83.0",
+    "@react-native/babel-preset": "0.85.3",
+    "@react-native/metro-config": "0.85.3",
+    "@react-native/typescript-config": "0.85.3",
     "@types/react": "^19.2.0",
     "react-native-builder-bob": "^0.40.18",
     "react-native-monorepo-config": "^0.3.3"
   },
   "engines": {
     "node": ">=20"
-  },
-  "worklets": {
-    "staticFeatureFlags": {
-      "BUNDLE_MODE_ENABLED": true
-    }
   }
 }
