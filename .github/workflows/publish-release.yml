@@ -1,9 +1,5 @@
 name: Publish release to npm
 on:
-  # For nightly releases
-  schedule:
-    - cron: '27 23 * * *' # at 23:27 every day
-  # For manual releases
   workflow_dispatch:
     inputs:
       release-type:
@@ -49,8 +45,7 @@ jobs:
           cache: 'yarn'
           registry-url: https://registry.npmjs.org/
 
-      - name: Publish manual release
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Publish release
         uses: software-mansion-labs/npm-package-publish@main
         with:
           package-name: 'react-native-streamdown'
@@ -60,12 +55,3 @@ jobs:
           version: ${{ inputs.version }}
           dry-run: ${{ inputs.dry-run }}
 
-      - name: Publish automatic nightly release
-        if: ${{ github.event_name == 'schedule' }}
-        uses: software-mansion-labs/npm-package-publish@main
-        with:
-          package-name: 'react-native-streamdown'
-          package-json-path: 'package.json'
-          install-dependencies-command: 'YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install'
-          release-type: 'nightly'
-          dry-run: false
