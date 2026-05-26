@@ -1,3 +1,5 @@
+<img src="https://github.com/user-attachments/assets/d5fc6b72-1cca-4a2c-b0a0-086c9c95edf6" alt="react-native-enriched-markdown by Software Mansion" width="100%">
+
 # react-native-streamdown
 
 > This project is not affiliated with, endorsed by, or sponsored by Vercel.
