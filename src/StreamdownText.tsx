@@ -20,7 +20,6 @@ export function StreamdownText({
 
   return (
     <EnrichedMarkdownText
-      flavor="commonmark"
       markdown={processedMarkdown}
       streamingAnimation
       selectable={!isStreaming && selectable}

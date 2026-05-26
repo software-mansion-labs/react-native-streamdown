@@ -10,8 +10,8 @@ It processes raw, incomplete markdown (as it streams token-by-token from an LLM)
 
 - Renders incomplete streaming markdown correctly — no visual glitches mid-stream
 - Background thread processing via `react-native-worklets` Bundle Mode
-- Inline LaTeX support (`$...$`) with streaming completion — applied automatically, no configuration needed
-- CommonMark rendering (headers, bold, italic, inline code, fenced code blocks, links, images) powered by `react-native-enriched-markdown` with built-in `streamingAnimation`
+- LaTeX support with streaming completion — applied automatically, no configuration needed
+- CommonMark and GitHub Flavored Markdown rendering powered by `react-native-enriched-markdown` with built-in `streamingAnimation`
 - Customizable via `remendConfig`
 
 ---
@@ -30,9 +30,12 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 
 | Package                          | Version |
 | -------------------------------- | ------- |
-| `react-native-enriched-markdown` | `0.4.0` |
+| `react-native-enriched-markdown` | `>=0.4.0` |
 | `react-native-worklets`          | `0.8.3` |
 | `remend`                         | `1.3.0` |
+
+> [!NOTE]
+> GFM table streaming requires `react-native-enriched-markdown >=0.6.0`.
 
 ---
 
@@ -171,11 +174,13 @@ import { StreamdownText } from 'react-native-streamdown';
 
 ### Props
 
-`StreamdownText` accepts all props from `EnrichedMarkdownText` (except `flavor`, which is hardcoded to `commonmark`) plus one additional prop:
+`StreamdownText` accepts all props from `EnrichedMarkdownText` plus one additional prop:
 
 | Prop           | Type            | Description                                                                                                                                 |
 | -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `remendConfig` | `RemendOptions` | Optional. Override the default remend processing config. See [remend docs](https://www.npmjs.com/package/remend) for all available options. |
+
+Pass `flavor="github"` to render GitHub Flavored Markdown. GFM table streaming requires `react-native-enriched-markdown >=0.6.0`.
 
 ---
 
@@ -187,12 +192,6 @@ The `example/` directory in this repository contains a fully working demo app th
 - **LLM Streaming Demo** — connects to the OpenAI Chat Completions API via SSE and renders the response live using `StreamdownText`
 
 It is a practical reference for the full Bundle Mode setup (Babel, Metro, `package.json` flags) and for how to wire `StreamdownText` into a real streaming UI.
-
----
-
-## Limitations
-
-- **CommonMark only** — `StreamdownText` currently renders using the `commonmark` flavour of `react-native-enriched-markdown`. GitHub Flavored Markdown (GFM) support is planned for a future release.
 
 ---
 

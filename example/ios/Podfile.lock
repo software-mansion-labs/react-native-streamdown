@@ -1857,7 +1857,7 @@ PODS:
     - React-utils (= 0.85.3)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.85.3)
-  - ReactNativeEnrichedMarkdown (0.4.0):
+  - ReactNativeEnrichedMarkdown (0.6.0):
     - hermes-engine
     - iosMath (~> 0.9)
     - RCTRequired
@@ -2270,7 +2270,7 @@ SPEC CHECKSUMS:
   ReactCodegen: c8f81e6c6f762dcf442a6203a1fb58f7dafc8014
   ReactCommon: 7dfc3250793bf36cf221096ff59e1179e13eef7f
   ReactNativeDependencies: 9ce75df098e6192b99f48ac8b78f365f02e52fdc
-  ReactNativeEnrichedMarkdown: d96de50b3f1207d157fe7e43bf7cdb61db014fb0
+  ReactNativeEnrichedMarkdown: 861d6937d7f4a6481e8446538dc715c93b545143
   RNWorklets: 4931990f73bc8f347586918b2e13f11dfadf3b75
   Yoga: 77dfa8673de2874e1855002ae59c68b8be9b007b
 
