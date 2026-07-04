@@ -47,7 +47,7 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 
 ### 1. `babel.config.js` — configure Worklets Babel plugin
 
-`react-native-streamdown` requires special options to be added to the Worklets Babel plugin config in `babel.config.js`, namely `bundleMode: true` and `importForwarding.moduleNames: ['remend']` when using `react-native-worklets` 0.10 or newer. Your final config could look like this:
+`react-native-streamdown` requires special options to be added to the Worklets Babel plugin config in `babel.config.js`, namely `bundleMode: true` and `importForwarding.moduleNames: ['remend']`. Your final config could look like this:
 
 #### Expo
 
@@ -87,7 +87,7 @@ const workletsPluginOptions = {
 
 `importForwarding.moduleNames: ['remend']` tells the Babel plugin to forward the `remend` import into the generated worklet so it can be called off the JS thread.
 
-For older versions of `react-native-worklets`, use `workletizableModules: ['remend']` instead.
+For `react-native-worklets` versions below 0.10, use `workletizableModules: ['remend']` instead.
 
 ### 2. `metro.config.js` — configure Metro for monorepos
 
