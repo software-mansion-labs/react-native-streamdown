@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, '..');
 const workletsPluginOptions = {
   bundleMode: true,
   strictGlobal: true,
-  workletizableModules: ['remend'],
+  importForwarding: { moduleNames: ['remend'] },
 };
 
 module.exports = getConfig(

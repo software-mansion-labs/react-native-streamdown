@@ -33,7 +33,7 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 | Package                          | Version |
 | -------------------------------- | ------- |
 | `react-native-enriched-markdown` | `>=0.4.0` |
-| `react-native-worklets`          | `0.8.3` |
+| `react-native-worklets`          | `0.10.2` |
 | `remend`                         | `1.3.0` |
 
 > [!NOTE]
@@ -85,13 +85,13 @@ const workletsPluginOptions = {
 };
 ```
 
-`importForwarding.moduleNames: ['remend']` tells the Babel plugin to forward the `remend` import into the generated worklet so it can be called off the JS thread.
+`importForwarding.moduleNames: ['remend']` tells the Babel plugin to forward the `remend` import into the generated worklet so it can be called off the JS thread. See the [import forwarding docs](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/importForwarding/) for details.
 
 For `react-native-worklets` versions below 0.10, use `workletizableModules: ['remend']` instead.
 
 ### 2. `metro.config.js` — configure Metro for monorepos
 
-`react-native-worklets` Bundle Mode generates files on the fly that might not be tracked by Metro in some monorepo setups. It might also shadow your resolving function. If you're running into issues with module resolution, you need to add the following to your `metro.config.js`:
+`react-native-worklets` Bundle Mode generates files on the fly that might not be tracked by Metro in some monorepo setups. It might also shadow your resolving function. If you're running into issues with module resolution, use `getBundleModeMetroConfig` (which preserves your existing `resolveRequest`) and watch the `.worklets/` output directory in your `metro.config.js`:
 
 #### Expo
 
@@ -101,7 +101,7 @@ const {
   getBundleModeMetroConfig,
 } = require('react-native-worklets/bundleMode');
 
-let config = getDefaultConfig(__dirname);
+const config = getDefaultConfig(__dirname);
 
 // Watch the .worklets/ output directory
 config.watchFolders.push(
@@ -111,33 +111,18 @@ config.watchFolders.push(
   )
 );
 
-// Resolve react-native-worklets/.worklets/* via the Bundle Mode resolver
-const defaultResolver = config.resolver.resolveRequest;
-
-config = getBundleModeMetroConfig(config);
-
-const bundleModeResolver = config.resolver.resolveRequest;
-
-config.resolver.resolveRequest = (context, moduleName, platform) => {
-  if (moduleName.startsWith('react-native-worklets/.worklets/')) {
-    return bundleModeResolver(context, moduleName, platform);
-  }
-  if (defaultResolver) {
-    return defaultResolver(context, moduleName, platform);
-  }
-  return context.resolveRequest(context, moduleName, platform);
-};
-
-module.exports = config;
+module.exports = getBundleModeMetroConfig(config);
 ```
 
 #### React Native CLI
 
 ```js
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
-const { bundleModeMetroConfig } = require('react-native-worklets/bundleMode');
+const { getDefaultConfig } = require('@react-native/metro-config');
+const {
+  getBundleModeMetroConfig,
+} = require('react-native-worklets/bundleMode');
 
-let config = getDefaultConfig(__dirname);
+const config = getDefaultConfig(__dirname);
 
 // Watch the .worklets/ output directory
 config.watchFolders.push(
@@ -147,26 +132,7 @@ config.watchFolders.push(
   )
 );
 
-// Resolve react-native-worklets/.worklets/* via the Bundle Mode resolver
-const defaultResolver = config.resolver.resolveRequest;
-
-config = mergeConfig(config, bundleModeMetroConfig);
-
-config.resolver.resolveRequest = (context, moduleName, platform) => {
-  if (moduleName.startsWith('react-native-worklets/.worklets/')) {
-    return bundleModeMetroConfig.resolver.resolveRequest(
-      context,
-      moduleName,
-      platform
-    );
-  }
-  if (defaultResolver) {
-    return defaultResolver(context, moduleName, platform);
-  }
-  return context.resolveRequest(context, moduleName, platform);
-};
-
-module.exports = config;
+module.exports = getBundleModeMetroConfig(config);
 ```
 
 ---
