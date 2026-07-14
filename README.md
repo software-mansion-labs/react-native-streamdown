@@ -33,7 +33,7 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 | Package                          | Version |
 | -------------------------------- | ------- |
 | `react-native-enriched-markdown` | `>=0.4.0` |
-| `react-native-worklets`          | `0.10.2` |
+| `react-native-worklets`          | `>=0.10.0` |
 | `remend`                         | `1.3.0` |
 
 > [!NOTE]
@@ -86,8 +86,6 @@ const workletsPluginOptions = {
 ```
 
 `importForwarding.moduleNames: ['remend']` tells the Babel plugin to forward the `remend` import into the generated worklet so it can be called off the JS thread. See the [import forwarding docs](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/importForwarding/) for details.
-
-For `react-native-worklets` versions below 0.10, use `workletizableModules: ['remend']` instead.
 
 ### 2. `metro.config.js` — configure Metro for monorepos
 
