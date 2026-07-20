@@ -54,7 +54,7 @@
   "bugs": {
     "url": "https://github.com/software-mansion-labs/react-native-streamdown/issues"
   },
-  "homepage": "https://github.com/software-mansion-labs/react-native-streamdown#readme",
+  "homepage": "https://enriched.swmansion.com/streamdown",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
