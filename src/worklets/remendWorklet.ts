@@ -19,7 +19,7 @@ const defaultRemendConfig: RemendOptions = {
   setextHeadings: true,
 };
 
-const remendRuntime = createWorkletRuntime('remend-processor');
+const remendRuntime = createWorkletRuntime({ name: 'remend-processor' });
 
 export function processRemendInWorklet(
   markdown: string,

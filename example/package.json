@@ -15,7 +15,7 @@
     "react-native-enriched-markdown": "0.6.0",
     "react-native-safe-area-context": "^5.7.0",
     "react-native-streamdown": "*",
-    "react-native-worklets": "0.8.3",
+    "react-native-worklets": "0.10.2",
     "remend": "1.2.2"
   },
   "devDependencies": {
