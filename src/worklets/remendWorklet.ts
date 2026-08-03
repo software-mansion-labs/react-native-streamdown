@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import {
   createWorkletRuntime,
   scheduleOnRuntime,
@@ -19,7 +20,12 @@ const defaultRemendConfig: RemendOptions = {
   setextHeadings: true,
 };
 
-const remendRuntime = createWorkletRuntime({ name: 'remend-processor' });
+// react-native-worklets' web build ships the runtime APIs as throwing stubs,
+// so on web remend runs on the JS thread; scheduleOnRN works there (microtask).
+const remendRuntime =
+  Platform.OS === 'web'
+    ? null
+    : createWorkletRuntime({ name: 'remend-processor' });
 
 export function processRemendInWorklet(
   markdown: string,
@@ -29,6 +35,11 @@ export function processRemendInWorklet(
   const mergedConfig = config
     ? { ...defaultRemendConfig, ...config }
     : defaultRemendConfig;
+
+  if (remendRuntime == null) {
+    scheduleOnRN(onComplete, remend(markdown, mergedConfig));
+    return;
+  }
 
   scheduleOnRuntime(remendRuntime, () => {
     'worklet';
