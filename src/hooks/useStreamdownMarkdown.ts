@@ -19,6 +19,13 @@ export function useStreamdownMarkdown(
   const [isStreaming, setIsStreaming] = useState(false);
   const versionRef = useRef(0);
 
+  // The config must be compared by content, not identity: StreamdownText
+  // forwards the caller's remendConfig through a fresh options literal every
+  // render, so an inline config (the documented usage) would otherwise re-run
+  // this effect on every commit and reschedule the whole-document worklet job
+  // without bound. A serialized key is the stable dependency.
+  const remendConfigKey = JSON.stringify(options?.remendConfig);
+
   useEffect(() => {
     if (markdown === '') {
       setProcessedMarkdown('');
@@ -39,7 +46,10 @@ export function useStreamdownMarkdown(
       },
       options?.remendConfig
     );
-  }, [markdown, options?.remendConfig]);
+    // The effect intentionally reads the live options?.remendConfig; the
+    // serialized key above is what gates re-runs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markdown, remendConfigKey]);
 
   return { processedMarkdown, isStreaming };
 }
