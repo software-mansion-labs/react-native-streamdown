@@ -19,6 +19,11 @@ export function useStreamdownMarkdown(
   const [isStreaming, setIsStreaming] = useState(false);
   const versionRef = useRef(0);
 
+  // Gate the effect on the config's content, not its identity: an inline
+  // remendConfig is a fresh object every render and would otherwise reschedule
+  // the worklet job on every commit.
+  const remendConfigKey = JSON.stringify(options?.remendConfig);
+
   useEffect(() => {
     if (markdown === '') {
       setProcessedMarkdown('');
@@ -39,7 +44,9 @@ export function useStreamdownMarkdown(
       },
       options?.remendConfig
     );
-  }, [markdown, options?.remendConfig]);
+    // Reads the live options?.remendConfig; remendConfigKey gates re-runs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markdown, remendConfigKey]);
 
   return { processedMarkdown, isStreaming };
 }
