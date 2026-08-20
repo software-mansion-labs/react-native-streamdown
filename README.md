@@ -32,12 +32,9 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 
 | Package                          | Version |
 | -------------------------------- | ------- |
-| `react-native-enriched-markdown` | `>=0.4.0` |
+| `react-native-enriched-markdown` | `>=1.0.0` |
 | `react-native-worklets`          | `>=0.10.0` |
 | `remend`                         | `1.3.0` |
-
-> [!NOTE]
-> GFM table streaming requires `react-native-enriched-markdown >=0.6.0`.
 
 ---
 
@@ -152,7 +149,7 @@ import { StreamdownText } from 'react-native-streamdown';
 | -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `remendConfig` | `RemendOptions` | Optional. Override the default remend processing config. See [remend docs](https://www.npmjs.com/package/remend) for all available options. |
 
-Pass `flavor="github"` to render GitHub Flavored Markdown. GFM table streaming requires `react-native-enriched-markdown >=0.6.0`.
+Pass `flavor="github"` to render GitHub Flavored Markdown.
 
 ---
 
