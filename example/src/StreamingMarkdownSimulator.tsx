@@ -112,6 +112,8 @@ export default function StreamingMarkdownSimulator() {
       >
         <StreamdownText
           markdown={partialMarkdown}
+          flavor="github"
+          remendConfig={{ katex: true }}
           onLinkPress={(e) => handleLinkPress(e.url)}
         />
         {isStreaming && <Text style={styles.streamingDot}>● Streaming…</Text>}
