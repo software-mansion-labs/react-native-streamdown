@@ -16,7 +16,7 @@ There are **three main types** of black holes:
 2. **Supermassive black holes** — found at the center of most galaxies
 3. **Intermediate black holes** — a class between stellar and supermassive
 
-| Type         | Typical mass (in M☉) | Where they form                 |
+| Type         | Typical mass         | Where they form                 |
 | ------------ | -------------------- | ------------------------------- |
 | Stellar      | 3 – 100              | Collapse of a massive star      |
 | Intermediate | 100 – 100,000        | Star cluster mergers (proposed) |
