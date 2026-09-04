@@ -10566,7 +10566,7 @@ __metadata:
     react-native-safe-area-context: "npm:^5.7.0"
     react-native-streamdown: "npm:*"
     react-native-worklets: "npm:0.10.2"
-    remend: "npm:1.2.2"
+    remend: "npm:1.3.0"
   languageName: unknown
   linkType: soft
 
@@ -10850,13 +10850,6 @@ __metadata:
   bin:
     release-it: bin/release-it.js
   checksum: 10c0/54888f271b665a4efc57b635664438ab256193d24a10928e19997c38b854056ad1bb2d653ede85c7552d45ecdcb1f1aa8861b8c0c27f9aaaf00ba916d3ae1781
-  languageName: node
-  linkType: hard
-
-"remend@npm:1.2.2":
-  version: 1.2.2
-  resolution: "remend@npm:1.2.2"
-  checksum: 10c0/e5ff2a4d908114942507765b787e497853a3f58a81adb07f49502bb5e1b9ce492b977fe8cc5b00eb633cd9858b507ee0d0331bd3d667a30e3228ff2ef08332ca
   languageName: node
   linkType: hard
 
