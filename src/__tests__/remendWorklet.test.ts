@@ -1,3 +1,8 @@
+// This file uses only jest globals with no imports; `export {}` marks it a
+// module so its top-level consts are module-scoped (tsconfig has
+// verbatimModuleSyntax), not leaked into the global script scope.
+export {};
+
 // Stable, mutable Platform the mock factory closes over. jest.isolateModules
 // re-requires react-native on every load, so a plain outer mutation wouldn't
 // reach the module — this shared object does.
