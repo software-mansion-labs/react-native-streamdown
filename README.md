@@ -130,6 +130,14 @@ config.watchFolders.push(
 module.exports = getBundleModeMetroConfig(config);
 ```
 
+### 3. Patch Metro for synchronous worklet indexing (recommended)
+
+Bundle Mode isolates worklets into separate modules **on the fly**. Metro builds its file map when it starts, so it can fail to index these freshly generated modules in time — you'll see `Failed to get the SHA-1 for .../.worklets/<id>.js` and need to reload the app a few times before the bundle succeeds.
+
+To avoid this, patch Metro to allow synchronous indexing of the new modules, as described in the [Worklets Bundle Mode setup guide](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/setup). This repository's `example/` app applies such a patch via `resolutions` — use it as a reference.
+
+> Without the patch the app still works, but expect a few extra reloads on first launch while Metro catches up. The one-shot `react-native bundle` command (offline release bundling) requires the patch.
+
 ---
 
 ## Usage
