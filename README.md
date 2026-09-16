@@ -86,7 +86,9 @@ const workletsPluginOptions = {
 
 ### 2. `metro.config.js` — configure Metro for monorepos
 
-`react-native-worklets` Bundle Mode generates files on the fly that might not be tracked by Metro in some monorepo setups. It might also shadow your resolving function. If you're running into issues with module resolution, use `getBundleModeMetroConfig` (which preserves your existing `resolveRequest`) and watch the `.worklets/` output directory in your `metro.config.js`:
+In monorepos, `react-native-worklets` may be installed outside your app’s directory. The examples below locate the installed package so Metro can watch its generated `.worklets` files.
+
+If Metro already watches that directory or a parent directory, omit the `watchFolders` addition. Keep `getBundleModeMetroConfig`. For Expo-specific monorepo configuration, see [Expo's monorepo guide](https://docs.expo.dev/guides/monorepos/).
 
 #### Expo
 
@@ -98,11 +100,11 @@ const {
 
 const config = getDefaultConfig(__dirname);
 
-// Watch the .worklets/ output directory
+// Optional: watch .worklets if Metro does not already cover it.
 config.watchFolders.push(
-  require('path').resolve(
-    __dirname,
-    'node_modules/react-native-worklets/.worklets'
+  require('path').join(
+    require('path').dirname(require.resolve('react-native-worklets/package.json')),
+    '.worklets'
   )
 );
 
@@ -119,11 +121,11 @@ const {
 
 const config = getDefaultConfig(__dirname);
 
-// Watch the .worklets/ output directory
+// Optional: watch .worklets if Metro does not already cover it.
 config.watchFolders.push(
-  require('path').resolve(
-    __dirname,
-    'node_modules/react-native-worklets/.worklets'
+  require('path').join(
+    require('path').dirname(require.resolve('react-native-worklets/package.json')),
+    '.worklets'
   )
 );
 
