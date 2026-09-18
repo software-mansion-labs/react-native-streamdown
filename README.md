@@ -38,6 +38,26 @@ yarn add react-native-enriched-markdown react-native-worklets remend
 
 ---
 
+#### Using worklets below 0.10
+
+The worklet path needs Bundle Mode `importForwarding`, added in `react-native-worklets` 0.10.
+Apps pinned lower, for instance through `react-native-reanimated@4.3.x` which peers
+`react-native-worklets@0.8.x`, will hit:
+
+```
+[Worklets] Tried to synchronously call a non-worklet function on the UI thread
+```
+
+Install past the peer warning (yarn and pnpm warn; npm needs `--legacy-peer-deps` or an
+`overrides` entry) and run remend on the JS thread instead:
+
+```tsx
+<StreamdownText markdown={markdown} forceJsThread />
+```
+
+remend then shares the JS thread with your UI and re-parses the whole document on every update, so
+batch your updates, or treat this as a bridge until you can move to 0.10.
+
 ## Required setup — Bundle Mode
 
 `react-native-streamdown` runs markdown processing on a worklet thread using **Bundle Mode** from `react-native-worklets`. This requires extra configuration steps from the [official Bundle Mode setup guide](https://docs.swmansion.com/react-native-worklets/docs/bundleMode/setup/). Make sure to complete these steps before continuing. For a real-world reference of an app configured with Bundle Mode, check out the [Bundle Mode Showcase App](https://github.com/software-mansion-labs/Bundle-Mode-showcase-app).
@@ -151,11 +171,12 @@ import { StreamdownText } from 'react-native-streamdown';
 
 ### Props
 
-`StreamdownText` accepts all props from `EnrichedMarkdownText` plus one additional prop:
+`StreamdownText` accepts all props from `EnrichedMarkdownText` plus two additional props:
 
 | Prop           | Type            | Description                                                                                                                                 |
 | -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `remendConfig` | `RemendOptions` | Optional. Override the default remend processing config. See [remend docs](https://www.npmjs.com/package/remend) for all available options. |
+| `forceJsThread` | `boolean` | Optional, defaults to `false`. Runs remend on the JS thread instead of a worklet runtime. Required on `react-native-worklets` below `0.10`. |
 
 Pass `flavor="github"` to render GitHub Flavored Markdown.
 

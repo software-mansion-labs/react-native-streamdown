@@ -23,6 +23,8 @@ const STREAMING_INTERVAL = 50;
 
 export default function StreamingMarkdownSimulator() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  // Tap the toggle to compare the worklet runtime against the JS thread.
+  const [forceJsThread, setForceJsThread] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -86,6 +88,15 @@ export default function StreamingMarkdownSimulator() {
           </Text>
         </View>
 
+        <Pressable
+          style={styles.threadToggle}
+          onPress={() => setForceJsThread((on) => !on)}
+        >
+          <Text style={styles.threadToggleText}>
+            remend runs on: {forceJsThread ? 'JS thread' : 'worklet runtime'}
+          </Text>
+        </Pressable>
+
         <View style={styles.buttonRow}>
           <ControlButton
             label={isStreaming ? 'Streaming...' : 'Start'}
@@ -114,6 +125,7 @@ export default function StreamingMarkdownSimulator() {
           markdown={partialMarkdown}
           flavor="github"
           remendConfig={{ katex: true }}
+          forceJsThread={forceJsThread}
           onLinkPress={(e) => handleLinkPress(e.url)}
         />
         {isStreaming && <Text style={styles.streamingDot}>● Streaming…</Text>}
@@ -155,6 +167,15 @@ const styles = StyleSheet.create({
   progressFill: { height: '100%', borderRadius: 3 },
   progressText: { fontSize: 11, color: '#666', textAlign: 'center' },
   buttonRow: { flexDirection: 'row', gap: 8 },
+  threadToggle: {
+    marginBottom: 10,
+    paddingVertical: 7,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#2196F3',
+    alignItems: 'center',
+  },
+  threadToggleText: { fontSize: 12, fontWeight: '600', color: '#2196F3' },
   button: {
     flex: 1,
     paddingVertical: 10,
