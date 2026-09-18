@@ -30,13 +30,16 @@ const remendRuntime =
 export function processRemendInWorklet(
   markdown: string,
   onComplete: (result: string) => void,
-  config?: RemendOptions
+  config?: RemendOptions,
+  forceJsThread = false
 ) {
   const mergedConfig = config
     ? { ...defaultRemendConfig, ...config }
     : defaultRemendConfig;
 
-  if (remendRuntime == null) {
+  // Two ways to land on the JS thread: web has no worklet runtime at all, or the app
+  // opted out because its react-native-worklets is too old to hand `remend` to a worklet.
+  if (remendRuntime == null || forceJsThread) {
     scheduleOnRN(onComplete, remend(markdown, mergedConfig));
     return;
   }
