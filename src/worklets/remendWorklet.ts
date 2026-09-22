@@ -30,13 +30,17 @@ const remendRuntime =
 export function processRemendInWorklet(
   markdown: string,
   onComplete: (result: string) => void,
-  config?: RemendOptions
+  config?: RemendOptions,
+  forceJsThread = false
 ) {
   const mergedConfig = config
     ? { ...defaultRemendConfig, ...config }
     : defaultRemendConfig;
 
-  if (remendRuntime == null) {
+  // No runtime on web, and worklets before 0.10 cannot resolve `remend` inside one.
+  const runOnJsThread = remendRuntime == null || forceJsThread;
+
+  if (runOnJsThread) {
     scheduleOnRN(onComplete, remend(markdown, mergedConfig));
     return;
   }

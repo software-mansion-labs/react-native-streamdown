@@ -4,6 +4,7 @@ import type { RemendOptions } from 'remend';
 
 interface UseStreamdownMarkdownOptions {
   remendConfig?: RemendOptions;
+  forceJsThread?: boolean;
 }
 
 interface UseStreamdownMarkdownResult {
@@ -23,6 +24,8 @@ export function useStreamdownMarkdown(
   // remendConfig is a fresh object every render and would otherwise reschedule
   // the worklet job on every commit.
   const remendConfigKey = JSON.stringify(options?.remendConfig);
+  // In the dependency list below so flipping it reprocesses the current markdown.
+  const forceJsThread = options?.forceJsThread ?? false;
 
   useEffect(() => {
     if (markdown === '') {
@@ -42,11 +45,12 @@ export function useStreamdownMarkdown(
           setIsStreaming(false);
         }
       },
-      options?.remendConfig
+      options?.remendConfig,
+      forceJsThread
     );
     // Reads the live options?.remendConfig; remendConfigKey gates re-runs.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markdown, remendConfigKey]);
+  }, [markdown, remendConfigKey, forceJsThread]);
 
   return { processedMarkdown, isStreaming };
 }

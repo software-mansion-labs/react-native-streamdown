@@ -12,10 +12,12 @@ export function StreamdownText({
   markdown,
   remendConfig,
   selectable = true,
+  forceJsThread = false,
   ...enrichedMarkdownProps
 }: StreamdownTextProps) {
   const { processedMarkdown, isStreaming } = useStreamdownMarkdown(markdown, {
     remendConfig,
+    forceJsThread,
   });
 
   return (
