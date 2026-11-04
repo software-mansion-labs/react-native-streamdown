@@ -52,4 +52,59 @@ describe('useStreamdownMarkdown', () => {
     });
     expect(processRemendInWorklet).toHaveBeenCalledTimes(2);
   });
+
+  it('renders once per markdown change and derives isStreaming from the processed result', () => {
+    const pending: Array<() => void> = [];
+    const runSynchronously = processRemendInWorklet.getMockImplementation();
+    processRemendInWorklet.mockImplementation(
+      (markdown: string, onComplete: (r: string) => void) => {
+        pending.push(() => onComplete(`${markdown}!`));
+      }
+    );
+
+    const states: Array<{ processedMarkdown: string; isStreaming: boolean }> =
+      [];
+    const Probe = ({ markdown }: { markdown: string }) => {
+      states.push(useStreamdownMarkdown(markdown));
+      return null;
+    };
+    const flushWorklet = () => {
+      act(() => {
+        pending.splice(0).forEach((complete) => complete());
+      });
+    };
+
+    let renderer!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      renderer = TestRenderer.create(<Probe markdown="**a" />);
+    });
+    // No follow-up render from the effect: the only render is the mount.
+    expect(states).toEqual([{ processedMarkdown: '', isStreaming: true }]);
+
+    flushWorklet();
+    expect(states.at(-1)).toEqual({
+      processedMarkdown: '**a!',
+      isStreaming: false,
+    });
+
+    states.length = 0;
+    act(() => {
+      renderer.update(<Probe markdown="**ab" />);
+    });
+    expect(states).toEqual([{ processedMarkdown: '**a!', isStreaming: true }]);
+
+    flushWorklet();
+    expect(states.at(-1)).toEqual({
+      processedMarkdown: '**ab!',
+      isStreaming: false,
+    });
+
+    states.length = 0;
+    act(() => {
+      renderer.update(<Probe markdown="" />);
+    });
+    expect(states).toEqual([{ processedMarkdown: '', isStreaming: false }]);
+
+    processRemendInWorklet.mockImplementation(runSynchronously);
+  });
 });
