@@ -31,6 +31,7 @@ export function useStreamdownMarkdown(
   // after ~50 chunks.
   const [result, setResult] = useState<RemendResult>(EMPTY_RESULT);
   const versionRef = useRef(0);
+  const appliedVersionRef = useRef(0);
 
   // Gate the effect on the config's content, not its identity: an inline
   // remendConfig is a fresh object every render and would otherwise reschedule
@@ -38,17 +39,23 @@ export function useStreamdownMarkdown(
   const remendConfigKey = JSON.stringify(options?.remendConfig);
 
   useEffect(() => {
-    // Also invalidates any in-flight job when the markdown is cleared.
     const currentVersion = ++versionRef.current;
 
     if (markdown === '') {
+      // Results of jobs started before the markdown was cleared are stale.
+      appliedVersionRef.current = currentVersion;
       return;
     }
 
     processRemendInWorklet(
       markdown,
       (processed) => {
-        if (currentVersion === versionRef.current) {
+        // Apply any result newer than the one shown, not only the latest:
+        // when a round-trip takes longer than the gap between chunks, a
+        // latest-only check would drop every result and freeze the text
+        // until the stream pauses.
+        if (currentVersion > appliedVersionRef.current) {
+          appliedVersionRef.current = currentVersion;
           setResult({ source: markdown, processed });
         }
       },
